@@ -1,0 +1,844 @@
+{
+  "paragraphs": [
+    {
+      "text": "sc.version\nimport org.apache.spark.sql._\nimport org.apache.spark.sql.types._\nimport org.apache.spark.sql.functions.unix_timestamp\nimport org.apache.commons.lang.time.DateFormatUtils;\nimport org.apache.commons.lang.time.DateUtils;\nimport org.apache.commons.lang.time.FastDateFormat;\nimport java.util.Calendar;\nimport java.util.Date;\nimport java.util.GregorianCalendar;\nimport org.joda.time.{DateTimeZone}\nimport org.joda.time.format.DateTimeFormat\n\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:11 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482089190635_880338938",
+      "id": "20161218-112630_1237796614",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nres0: String \u003d 2.0.2\n\nimport org.apache.spark.sql._\n\nimport org.apache.spark.sql.types._\n\nimport org.apache.spark.sql.functions.unix_timestamp\n\nimport org.apache.commons.lang.time.DateFormatUtils\n\nimport org.apache.commons.lang.time.DateUtils\n\nimport org.apache.commons.lang.time.FastDateFormat\n\nimport java.util.Calendar\n\nimport java.util.Date\n\nimport java.util.GregorianCalendar\n\nimport org.joda.time.DateTimeZone\n\nimport org.joda.time.format.DateTimeFormat\n"
+      },
+      "dateCreated": "Dec 18, 2016 11:26:30 AM",
+      "dateStarted": "Jan 23, 2017 11:09:30 AM",
+      "dateFinished": "Jan 23, 2017 11:09:47 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\n\nval schema \u003d StructType(StructField(\"Parameter\", StringType, true) ::\n                        StructField(\"PersonID\", StringType, true) ::\n                        StructField(\"EncntrID\", StringType, true) ::\n                        StructField(\"Event\", StringType, true) ::\n                        StructField(\"Res\", DoubleType, true) ::\n                        StructField(\"ClinDt\", TimestampType, true) ::\n                        StructField(\"AcqDt\", TimestampType, true) ::\n                        StructField(\"VerDt\", TimestampType, nullable \u003d true) ::\n                        StructField(\"Device\", StringType, true) ::\n                        StructField(\"Loc\", StringType, true) ::\n                        StructField(\"Facility\", StringType, true) ::\n                        StructField(\"Unit\", StringType, true) ::\n                        StructField(\"Room\", StringType, true) ::\n                        StructField(\"ResID\", DoubleType, true) :: Nil)\n\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:11 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482087999261_-1701246796",
+      "id": "20161218-110639_1904693648",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\nschema: org.apache.spark.sql.types.StructType \u003d StructType(StructField(Parameter,StringType,true), StructField(PersonID,StringType,true), StructField(EncntrID,StringType,true), StructField(Event,StringType,true), StructField(Res,DoubleType,true), StructField(ClinDt,TimestampType,true), StructField(AcqDt,TimestampType,true), StructField(VerDt,TimestampType,true), StructField(Device,StringType,true), StructField(Loc,StringType,true), StructField(Facility,StringType,true), StructField(Unit,StringType,true), StructField(Room,StringType,true), StructField(ResID,DoubleType,true))\n"
+      },
+      "dateCreated": "Dec 18, 2016 11:06:39 AM",
+      "dateStarted": "Jan 23, 2017 11:10:24 AM",
+      "dateFinished": "Jan 23, 2017 11:10:25 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\nval df \u003d sqlContext.read.format(\"com.databricks.spark.csv\")\n                    .option(\"header\", \"false\")\n                    .option(\"nullValue\",\" \")\n                    .option(\"timestampFormat\", \"MM/dd/yy h:mm:ss\")\n                    .option(\"InferSchema\", true)\n                    .load(\"/home/spark/BMDI/Data/mlh_bmdi_*.csv\")",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:11 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482088178166_360130542",
+      "id": "20161218-110938_331461488",
+      "result": {
+        "code": "SUCCESS",
+        "type": "TEXT",
+        "msg": "\ndf: org.apache.spark.sql.DataFrame \u003d [_c0: string, _c1: int ... 12 more fields]\n"
+      },
+      "dateCreated": "Dec 18, 2016 11:09:38 AM",
+      "dateStarted": "Jan 23, 2017 11:10:31 AM",
+      "dateFinished": "Jan 23, 2017 11:10:41 AM",
+      "status": "FINISHED",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\r\nval names \u003d Seq(\"Parameter\",\"PersonID\",\"EncntrID\",\"Event\",\"Res\",\"ClinDt\",\"AcqDt\",\"VerDt\",\"Device\",\"Loc\",\"Facility\",\"Unit\",\"Room\",\"ResID\")\r\nval dfn \u003d df.toDF(names: _*)\r\n\r\nval dft \u003d unix_timestamp($\"ClinDt\", \"M/d/yy h:mm\").cast(\"timestamp\")\r\nval dft2 \u003d unix_timestamp($\"AcqDt\", \"M/d/yy h:mm\").cast(\"timestamp\")\r\nval dft3 \u003d unix_timestamp($\"VerDt\", \"M/d/yy h:mm\").cast(\"timestamp\")\r\nval df1 \u003d dfn.withColumn(\"ClinDt1\", dft).drop(\"ClinDt\").withColumn(\"AcqDt1\", dft2).withColumn(\"VerDt1\", dft3)\r\n\r\ndf1.show()",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482091013752_573129238",
+      "id": "20161218-115653_458344037",
+      "result": {
+        "code": "ERROR",
+        "type": "TEXT",
+        "msg": "\nnames: Seq[String] \u003d List(Parameter, PersonID, EncntrID, Event, Res, ClinDt, AcqDt, VerDt, Device, Loc, Facility, Unit, Room, ResID)\n\ndfn: org.apache.spark.sql.DataFrame \u003d [Parameter: string, PersonID: int ... 12 more fields]\n\ndft: org.apache.spark.sql.Column \u003d CAST(unix_timestamp(ClinDt, M/d/yy h:mm) AS TIMESTAMP)\n\ndft2: org.apache.spark.sql.Column \u003d CAST(unix_timestamp(AcqDt, M/d/yy h:mm) AS TIMESTAMP)\n\ndft3: org.apache.spark.sql.Column \u003d CAST(unix_timestamp(VerDt, M/d/yy h:mm) AS TIMESTAMP)\n\ndf1: org.apache.spark.sql.DataFrame \u003d [Parameter: string, PersonID: int ... 14 more fields]\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\norg.apache.spark.SparkException: Job aborted due to stage failure: Task 0 in stage 2.0 failed 1 times, most recent failure: Lost task 0.0 in stage 2.0 (TID 20, localhost): java.lang.NullPointerException\n\tat org.apache.spark.sql.catalyst.util.DateTimeUtils$.stringToTime(DateTimeUtils.scala:125)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$$anonfun$castTo$6.apply$mcJ$sp(CSVInferSchema.scala:272)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$$anonfun$castTo$6.apply(CSVInferSchema.scala:272)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$$anonfun$castTo$6.apply(CSVInferSchema.scala:272)\n\tat scala.util.Try.getOrElse(Try.scala:79)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$.castTo(CSVInferSchema.scala:269)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVRelation$$anonfun$csvParser$3.apply(CSVRelation.scala:116)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVRelation$$anonfun$csvParser$3.apply(CSVRelation.scala:85)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVFileFormat$$anonfun$buildReader$1$$anonfun$apply$2.apply(CSVFileFormat.scala:128)\n\tat org.apache.spark.sql.execution.datasources.csv.CSVFileFormat$$anonfun$buildReader$1$$anonfun$apply$2.apply(CSVFileFormat.scala:127)\n\tat scala.collection.Iterator$$anon$12.nextCur(Iterator.scala:434)\n\tat scala.collection.Iterator$$anon$12.hasNext(Iterator.scala:440)\n\tat scala.collection.Iterator$$anon$11.hasNext(Iterator.scala:408)\n\tat org.apache.spark.sql.execution.datasources.FileScanRDD$$anon$1.hasNext(FileScanRDD.scala:91)\n\tat org.apache.spark.sql.execution.datasources.FileScanRDD$$anon$1.nextIterator(FileScanRDD.scala:128)\n\tat org.apache.spark.sql.execution.datasources.FileScanRDD$$anon$1.hasNext(FileScanRDD.scala:91)\n\tat org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIterator.processNext(Unknown Source)\n\tat org.apache.spark.sql.execution.BufferedRowIterator.hasNext(BufferedRowIterator.java:43)\n\tat org.apache.spark.sql.execution.WholeStageCodegenExec$$anonfun$8$$anon$1.hasNext(WholeStageCodegenExec.scala:370)\n\tat org.apache.spark.sql.execution.SparkPlan$$anonfun$4.apply(SparkPlan.scala:246)\n\tat org.apache.spark.sql.execution.SparkPlan$$anonfun$4.apply(SparkPlan.scala:240)\n\tat org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1$$anonfun$apply$24.apply(RDD.scala:803)\n\tat org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1$$anonfun$apply$24.apply(RDD.scala:803)\n\tat org.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)\n\tat org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)\n\tat org.apache.spark.rdd.RDD.iterator(RDD.scala:283)\n\tat org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:70)\n\tat org.apache.spark.scheduler.Task.run(Task.scala:86)\n\tat org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:274)\n\tat java.util.concurrent.ThreadPoolExecutor.runWorker(ThreadPoolExecutor.java:1145)\n\tat java.util.concurrent.ThreadPoolExecutor$Worker.run(ThreadPoolExecutor.java:615)\n\tat java.lang.Thread.run(Thread.java:745)\n\nDriver stacktrace:\n  at org.apache.spark.scheduler.DAGScheduler.org$apache$spark$scheduler$DAGScheduler$$failJobAndIndependentStages(DAGScheduler.scala:1454)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1442)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$abortStage$1.apply(DAGScheduler.scala:1441)\n  at scala.collection.mutable.ResizableArray$class.foreach(ResizableArray.scala:59)\n  at scala.collection.mutable.ArrayBuffer.foreach(ArrayBuffer.scala:48)\n  at org.apache.spark.scheduler.DAGScheduler.abortStage(DAGScheduler.scala:1441)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:811)\n  at org.apache.spark.scheduler.DAGScheduler$$anonfun$handleTaskSetFailed$1.apply(DAGScheduler.scala:811)\n  at scala.Option.foreach(Option.scala:257)\n  at org.apache.spark.scheduler.DAGScheduler.handleTaskSetFailed(DAGScheduler.scala:811)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.doOnReceive(DAGScheduler.scala:1667)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1622)\n  at org.apache.spark.scheduler.DAGSchedulerEventProcessLoop.onReceive(DAGScheduler.scala:1611)\n  at org.apache.spark.util.EventLoop$$anon$1.run(EventLoop.scala:48)\n  at org.apache.spark.scheduler.DAGScheduler.runJob(DAGScheduler.scala:632)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:1873)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:1886)\n  at org.apache.spark.SparkContext.runJob(SparkContext.scala:1899)\n  at org.apache.spark.sql.execution.SparkPlan.executeTake(SparkPlan.scala:347)\n  at org.apache.spark.sql.execution.CollectLimitExec.executeCollect(limit.scala:39)\n  at org.apache.spark.sql.Dataset$$anonfun$org$apache$spark$sql$Dataset$$execute$1$1.apply(Dataset.scala:2193)\n  at org.apache.spark.sql.execution.SQLExecution$.withNewExecutionId(SQLExecution.scala:57)\n  at org.apache.spark.sql.Dataset.withNewExecutionId(Dataset.scala:2546)\n  at org.apache.spark.sql.Dataset.org$apache$spark$sql$Dataset$$execute$1(Dataset.scala:2192)\n  at org.apache.spark.sql.Dataset.org$apache$spark$sql$Dataset$$collect(Dataset.scala:2199)\n  at org.apache.spark.sql.Dataset$$anonfun$head$1.apply(Dataset.scala:1935)\n  at org.apache.spark.sql.Dataset$$anonfun$head$1.apply(Dataset.scala:1934)\n  at org.apache.spark.sql.Dataset.withTypedCallback(Dataset.scala:2576)\n  at org.apache.spark.sql.Dataset.head(Dataset.scala:1934)\n  at org.apache.spark.sql.Dataset.take(Dataset.scala:2149)\n  at org.apache.spark.sql.Dataset.showString(Dataset.scala:239)\n  at org.apache.spark.sql.Dataset.show(Dataset.scala:526)\n  at org.apache.spark.sql.Dataset.show(Dataset.scala:486)\n  at org.apache.spark.sql.Dataset.show(Dataset.scala:495)\n  ... 50 elided\nCaused by: java.lang.NullPointerException\n  at org.apache.spark.sql.catalyst.util.DateTimeUtils$.stringToTime(DateTimeUtils.scala:125)\n  at org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$$anonfun$castTo$6.apply$mcJ$sp(CSVInferSchema.scala:272)\n  at org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$$anonfun$castTo$6.apply(CSVInferSchema.scala:272)\n  at org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$$anonfun$castTo$6.apply(CSVInferSchema.scala:272)\n  at scala.util.Try.getOrElse(Try.scala:79)\n  at org.apache.spark.sql.execution.datasources.csv.CSVTypeCast$.castTo(CSVInferSchema.scala:269)\n  at org.apache.spark.sql.execution.datasources.csv.CSVRelation$$anonfun$csvParser$3.apply(CSVRelation.scala:116)\n  at org.apache.spark.sql.execution.datasources.csv.CSVRelation$$anonfun$csvParser$3.apply(CSVRelation.scala:85)\n  at org.apache.spark.sql.execution.datasources.csv.CSVFileFormat$$anonfun$buildReader$1$$anonfun$apply$2.apply(CSVFileFormat.scala:128)\n  at org.apache.spark.sql.execution.datasources.csv.CSVFileFormat$$anonfun$buildReader$1$$anonfun$apply$2.apply(CSVFileFormat.scala:127)\n  at scala.collection.Iterator$$anon$12.nextCur(Iterator.scala:434)\n  at scala.collection.Iterator$$anon$12.hasNext(Iterator.scala:440)\n  at scala.collection.Iterator$$anon$11.hasNext(Iterator.scala:408)\n  at org.apache.spark.sql.execution.datasources.FileScanRDD$$anon$1.hasNext(FileScanRDD.scala:91)\n  at org.apache.spark.sql.execution.datasources.FileScanRDD$$anon$1.nextIterator(FileScanRDD.scala:128)\n  at org.apache.spark.sql.execution.datasources.FileScanRDD$$anon$1.hasNext(FileScanRDD.scala:91)\n  at org.apache.spark.sql.catalyst.expressions.GeneratedClass$GeneratedIterator.processNext(Unknown Source)\n  at org.apache.spark.sql.execution.BufferedRowIterator.hasNext(BufferedRowIterator.java:43)\n  at org.apache.spark.sql.execution.WholeStageCodegenExec$$anonfun$8$$anon$1.hasNext(WholeStageCodegenExec.scala:370)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$4.apply(SparkPlan.scala:246)\n  at org.apache.spark.sql.execution.SparkPlan$$anonfun$4.apply(SparkPlan.scala:240)\n  at org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1$$anonfun$apply$24.apply(RDD.scala:803)\n  at org.apache.spark.rdd.RDD$$anonfun$mapPartitionsInternal$1$$anonfun$apply$24.apply(RDD.scala:803)\n  at org\n\n\n\n\n\n\n.apache.spark.rdd.MapPartitionsRDD.compute(MapPartitionsRDD.scala:38)\n  at org.apache.spark.rdd.RDD.computeOrReadCheckpoint(RDD.scala:319)\n  at org.apache.spark.rdd.RDD.iterator(RDD.scala:283)\n  at org.apache.spark.scheduler.ResultTask.runTask(ResultTask.scala:70)\n  at org.apache.spark.scheduler.Task.run(Task.scala:86)\n  at org.apache.spark.executor.Executor$TaskRunner.run(Executor.scala:274)\n  ... 3 more\n"
+      },
+      "dateCreated": "Dec 18, 2016 11:56:53 AM",
+      "dateStarted": "Jan 23, 2017 11:11:37 AM",
+      "dateFinished": "Jan 23, 2017 11:11:42 AM",
+      "status": "ERROR",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val cdf \u003d df1.groupBy($\"Parameter\").count()\r\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482107115830_-1755311895",
+      "id": "20161218-162515_398521488",
+      "dateCreated": "Dec 18, 2016 4:25:15 AM",
+      "dateStarted": "Dec 19, 2016 12:59:55 PM",
+      "dateFinished": "Dec 19, 2016 12:59:56 PM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val ddf \u003d cdf.sort(org.apache.spark.sql.functions.col(\"count\").desc)\r\nddf.show()",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482108844707_-219913139",
+      "id": "20161218-165404_47865958",
+      "dateCreated": "Dec 18, 2016 4:54:04 AM",
+      "dateStarted": "Dec 19, 2016 12:59:59 PM",
+      "dateFinished": "Dec 19, 2016 1:00:03 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "import scala.collection.mutable.ListBuffer\r\nimport scala.util.matching.Regex\r\nval lcdf \u003d ddf.select($\"Parameter\").rdd.map(r \u003d\u003e r(0).toString).collect()\r\nvar keys \u003d new ListBuffer[String]()\r\nlcdf.foreach{ e \u003d\u003e \r\n    if (!e.startsWith(\"Test\") ) { keys +\u003d e}\r\n}\r\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482100332432_-1340084035",
+      "id": "20161218-143212_865943141",
+      "dateCreated": "Dec 18, 2016 2:32:12 AM",
+      "dateStarted": "Dec 19, 2016 1:00:06 AM",
+      "dateFinished": "Dec 19, 2016 1:00:10 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "df1.show()",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482112727662_2054270782",
+      "id": "20161218-175847_1122271805",
+      "dateCreated": "Dec 18, 2016 5:58:47 AM",
+      "dateStarted": "Dec 19, 2016 1:00:13 AM",
+      "dateFinished": "Dec 19, 2016 1:00:13 AM",
+      "status": "ERROR",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "//create a window function to aggregate values within the minute\r\nval wdf \u003d df1.select($\"PersonID\", $\"ClinDt1\", $\"Parameter\", $\"Res\", unix_timestamp($\"ClinDt1\") as \"wStartTime\")\r\nwdf.show()\r\n\r\nimport org.apache.spark.sql.expressions.Window\r\nimport org.apache.spark.sql.functions._\r\n\r\nval w \u003d Window.partitionBy($\"PersonID\",$\"Parameter\",$\"ClinDt1\").orderBy(org.apache.spark.sql.functions.col(\"wStartTime\").desc).rangeBetween(-59, 59)",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482088191429_1580385487",
+      "id": "20161218-110951_1298305770",
+      "dateCreated": "Dec 18, 2016 11:09:51 AM",
+      "dateStarted": "Dec 19, 2016 1:24:03 AM",
+      "dateFinished": "Dec 19, 2016 1:24:04 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val pivot \u003d wdf.groupBy($\"PersonID\", $\"ClinDt1\", $\"wStartTime\").pivot(\"Parameter\", keys.toSeq).avg(\"Res\")\nval sortedp \u003d pivot.sort($\"PersonID\", $\"wStartTime\")",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482112439930_-473927921",
+      "id": "20161218-175359_1722918144",
+      "dateCreated": "Dec 18, 2016 5:53:59 AM",
+      "dateStarted": "Dec 19, 2016 1:25:24 AM",
+      "dateFinished": "Dec 19, 2016 1:25:25 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// find a one minute baseline partitioned for each patient\r\n\r\nval w2 \u003d Window.partitionBy($\"PersonID\").orderBy($\"wStartTime\")\r\n\r\n// use the lag to get the previous five rows, lag is set to 1\r\nval lagCol \u003d lag(org.apache.spark.sql.functions.col(\"Heart Rate\"), 1).over(w2)\r\n\r\nval hrDiff \u003d org.apache.spark.sql.functions.col(\"Heart Rate\") - org.apache.spark.sql.functions.col(\"LagHR\")\r\n\r\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "editorHide": false,
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482113390865_1996922414",
+      "id": "20161218-180950_839863066",
+      "dateCreated": "Dec 18, 2016 6:09:50 AM",
+      "dateStarted": "Dec 19, 2016 1:25:28 AM",
+      "dateFinished": "Dec 19, 2016 1:25:29 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "\r\n// IF/THEN using spark\u0027s when/otherwise, make sure to put bracket around logical operations\r\n\r\nval trend \u003d when( ( org.apache.spark.sql.functions.col(\"HRDiff\").isNull ) || ( org.apache.spark.sql.functions.col(\"HRDiff\")  \u003d\u003d 0 ), \"SAME\").when( org.apache.spark.sql.functions.col(\"HRDiff\") \u003e 0, \"UP\").otherwise(\"DOWN\")\r\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482115432219_-616397216",
+      "id": "20161218-184352_1783897596",
+      "dateCreated": "Dec 18, 2016 6:43:52 AM",
+      "dateStarted": "Dec 19, 2016 1:25:33 AM",
+      "dateFinished": "Dec 19, 2016 1:25:33 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val s2 \u003d sortedp.withColumn(\"LagHR\", lagCol).withColumn(\"HRDiff\", hrDiff ).withColumn(\"Trend\", trend)\r\nval s4 \u003d s2.select($\"PersonID\",$\"ClinDt1\", $\"Heart Rate\",$\"LagHR\", $\"HRDiff\" , $\"Trend\")",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:12 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482115465588_-2114347278",
+      "id": "20161218-184425_1147394931",
+      "dateCreated": "Dec 18, 2016 6:44:25 AM",
+      "dateStarted": "Dec 19, 2016 1:25:36 AM",
+      "dateFinished": "Dec 19, 2016 1:25:37 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "s4.createOrReplaceTempView(\"hr1Diff\") ",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482165934781_-620653148",
+      "id": "20161219-084534_1145649159",
+      "dateCreated": "Dec 19, 2016 8:45:34 AM",
+      "dateStarted": "Dec 19, 2016 1:25:40 AM",
+      "dateFinished": "Dec 19, 2016 1:25:40 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "spark.table(\"hr1Diff\")\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "lineChart",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [
+            {
+              "name": "PersonID",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "ClinDt1",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "xAxis": {
+              "name": "PersonID",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "yAxis": {
+              "name": "ClinDt1",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482115532594_1205909848",
+      "id": "20161218-184532_1460805366",
+      "dateCreated": "Dec 18, 2016 6:45:32 AM",
+      "dateStarted": "Dec 19, 2016 1:25:50 AM",
+      "dateFinished": "Dec 19, 2016 1:25:51 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "spark.sql(\"select distinct PersonID from hr1Diff\").show()",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482116822897_-1558546287",
+      "id": "20161218-190702_274101375",
+      "dateCreated": "Dec 18, 2016 7:07:02 AM",
+      "dateStarted": "Dec 19, 2016 1:25:53 AM",
+      "dateFinished": "Dec 19, 2016 1:26:04 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect PersonID, hrDiff, ClinDt1\nfrom hr1Diff",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "scatterChart",
+          "height": 300.0,
+          "optionOpen": true,
+          "keys": [
+            {
+              "name": "ClinDt1",
+              "index": 2.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "hrDiff",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [
+            {
+              "name": "PersonID",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "scatter": {
+            "yAxis": {
+              "name": "hrDiff",
+              "index": 1.0,
+              "aggr": "sum"
+            },
+            "xAxis": {
+              "name": "ClinDt1",
+              "index": 2.0,
+              "aggr": "sum"
+            },
+            "group": {
+              "name": "PersonID",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482166058692_1012422043",
+      "id": "20161219-084738_548282221",
+      "dateCreated": "Dec 19, 2016 8:47:38 AM",
+      "dateStarted": "Dec 19, 2016 1:26:06 AM",
+      "dateFinished": "Dec 19, 2016 1:26:15 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "// Current HR compared to a five minute baseline\nval lC5 \u003d lag(org.apache.spark.sql.functions.col(\"Heart Rate\"), 5).over(w2)\nval lC4 \u003d lag(org.apache.spark.sql.functions.col(\"Heart Rate\"), 4).over(w2)\nval lC3 \u003d lag(org.apache.spark.sql.functions.col(\"Heart Rate\"), 3).over(w2)\nval lC2 \u003d lag(org.apache.spark.sql.functions.col(\"Heart Rate\"), 2).over(w2)\nval lC \u003d lag(org.apache.spark.sql.functions.col(\"Heart Rate\"), 1).over(w2)\n\n\nval lastFiveAvg \u003d (lC + lC2 + lC3 + lC4 + lC5) / 5\nval lastFiveDiff \u003d  round(org.apache.spark.sql.functions.col(\"Heart Rate\") - org.apache.spark.sql.functions.col(\"HRBaseline\"))\n\nval trend \u003d when( ( org.apache.spark.sql.functions.col(\"HRDiff\").isNull ) || ( org.apache.spark.sql.functions.col(\"HRDiff\")  \u003d\u003d 0 ), \"SAME\").when( org.apache.spark.sql.functions.col(\"HRDiff\") \u003e 0, \"UP\").otherwise(\"DOWN\")\n\nval sLastFive \u003d sortedp.withColumn(\"HRBaseline\", lastFiveAvg ).withColumn(\"HRDiff\", lastFiveDiff ).withColumn(\"Trend\", trend)\n",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482166489930_264348340",
+      "id": "20161219-085449_2147109394",
+      "dateCreated": "Dec 19, 2016 8:54:49 AM",
+      "dateStarted": "Dec 19, 2016 1:26:37 AM",
+      "dateFinished": "Dec 19, 2016 1:26:39 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "val s5 \u003d sLastFive.select(\"PersonID\", \"ClinDt1\", \"wStartTime\", \"Heart Rate\", \"HRDiff\", \"Trend\")",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482169008469_-108288930",
+      "id": "20161219-093648_353489350",
+      "dateCreated": "Dec 19, 2016 9:36:48 AM",
+      "dateStarted": "Dec 19, 2016 1:26:42 AM",
+      "dateFinished": "Dec 19, 2016 1:26:42 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "s5.createOrReplaceTempView(\"hr2Diff\") ",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482169060814_1779566653",
+      "id": "20161219-093740_265949622",
+      "dateCreated": "Dec 19, 2016 9:37:40 AM",
+      "dateStarted": "Dec 19, 2016 1:26:47 AM",
+      "dateFinished": "Dec 19, 2016 1:26:47 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "%sql\n\nselect PersonID, ClinDt1, HRDiff from hr2Diff",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "scatterChart",
+          "height": 300.0,
+          "optionOpen": true,
+          "keys": [
+            {
+              "name": "PersonID",
+              "index": 0.0,
+              "aggr": "sum"
+            }
+          ],
+          "values": [
+            {
+              "name": "ClinDt1",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          ],
+          "groups": [],
+          "scatter": {
+            "yAxis": {
+              "name": "ClinDt1",
+              "index": 1.0,
+              "aggr": "sum"
+            },
+            "group": {
+              "name": "PersonID",
+              "index": 0.0,
+              "aggr": "sum"
+            },
+            "xAxis": {
+              "name": "ClinDt1",
+              "index": 1.0,
+              "aggr": "sum"
+            }
+          }
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/sql",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482169194225_1159552285",
+      "id": "20161219-093954_2118184004",
+      "dateCreated": "Dec 19, 2016 9:39:54 AM",
+      "dateStarted": "Dec 19, 2016 1:26:50 AM",
+      "dateFinished": "Dec 19, 2016 1:26:59 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    },
+    {
+      "text": "",
+      "user": "physu",
+      "dateUpdated": "Jan 23, 2017 11:38:13 AM",
+      "config": {
+        "colWidth": 12.0,
+        "graph": {
+          "mode": "table",
+          "height": 300.0,
+          "optionOpen": false,
+          "keys": [],
+          "values": [],
+          "groups": [],
+          "scatter": {}
+        },
+        "enabled": true,
+        "editorMode": "ace/mode/scala",
+        "tableHide": false
+      },
+      "settings": {
+        "params": {},
+        "forms": {}
+      },
+      "jobName": "paragraph_1482169185792_1108164498",
+      "id": "20161219-093945_116930966",
+      "dateCreated": "Dec 19, 2016 9:39:45 AM",
+      "dateStarted": "Dec 19, 2016 10:09:44 AM",
+      "dateFinished": "Dec 19, 2016 10:09:44 AM",
+      "status": "FINISHED",
+      "errorMessage": "",
+      "progressUpdateIntervalMs": 500
+    }
+  ],
+  "name": "BMDI Spark- Data Loading and Transformations",
+  "id": "2C5DY5UJX",
+  "angularObjects": {
+    "2C666CYEU:shared_process": [],
+    "2C6DVWQYJ:shared_process": [],
+    "2C42T531F:shared_process": [],
+    "2C636F9UU:shared_process": [],
+    "2C683AHWA:shared_process": [],
+    "2C6CRV2UP:shared_process": [],
+    "2C76PS84Q:shared_process": [],
+    "2C3D5HWUR:shared_process": [],
+    "2C4H1GMBZ:shared_process": [],
+    "2C521P3KX:shared_process": [],
+    "2C45NF9RD:shared_process": [],
+    "2C74MXNQA:shared_process": [],
+    "2C65FD17D:shared_process": [],
+    "2C4UXSHU7:shared_process": [],
+    "2C3SP32X2:shared_process": [],
+    "2C3T6D79V:shared_process": [],
+    "2C5BMPVEG:shared_process": [],
+    "2C5JMUEC2:shared_process": []
+  },
+  "config": {},
+  "info": {}
+}
